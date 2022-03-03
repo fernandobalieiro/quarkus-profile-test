@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  postgresql:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: santa
+    ports:
+      - "5432:5432"

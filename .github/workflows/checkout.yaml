@@ -1,0 +1,38 @@
+name: Checkout Repositories
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  checkout-repos:
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ['self-hosted', 'Linux']
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          path: quarkus-profile-test
+          fetch-depth: 0
+
+      - name: Checkout another repository
+        uses: actions/checkout@v4
+        with:
+          repository: fernandobalieiro/quarkus-reactive-mongodb-panache
+          ref: main
+          path: quarkus-reactive-mongodb-panache
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Listing Paths
+        run: |
+          pwd
+          ls -la
+          ls -la quarkus-profile-test
+          ls -la quarkus-reactive-mongodb-panache

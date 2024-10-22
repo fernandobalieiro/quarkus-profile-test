@@ -1,0 +1,21 @@
+name: Receiver
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [custom-event]
+
+jobs:
+  run:
+    permissions:
+      contents: write
+      id-token: write
+    runs-on: 'cawe-linux-x64-general-small'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run a script
+        shell: bash
+        run: |
+          echo "Event received with payload: ${{ github.event.client_payload.key }} and value: ${{ github.event.client_payload.value }}"
